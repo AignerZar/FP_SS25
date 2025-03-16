@@ -16,9 +16,10 @@ import configparser
 from scipy.interpolate import interp1d
 from scipy.optimize import curve_fit
 import pandas as pd
+plt.rcParams['text.usetex'] = True #LaTeX implementation
 
 # loading the values
-file_path_data = "/Users/zarahaigner/Documents/Physik_6 Semester/Fortgeschrittenes Praktikum/FP_SS25/daten_bearbeitet.csv"
+file_path_data = "/home/jtilg/uibk/semester6/FP_SS25/daten_bearbeitet.csv"
 df = pd.read_csv(file_path_data, delimiter=';', decimal=',', encoding='ISO-8859-1')
 
 lam = df.iloc[:, 0].values
@@ -85,17 +86,17 @@ print(f"Fitted Iron Abundance (N_Fe/N_H): {abundance_fit:.2e} ± {abundance_erro
 
 # plotting the growth curve
 plt.figure(figsize=(8, 6))
-plt.plot(x_values, y_values, 'o', label='Filtered Fe I lines')
+plt.plot(x_values, y_values, 'o', label=r'Filtered Fe I lines')
 
 # Plot the linear fit
 chi_values = exc_potential_filtered
 fitted_y_values = linear_fit(chi_values, T_fit, abundance_fit)
-plt.plot(chi_values, fitted_y_values, label=f"Linear fit: T={T_fit:.2f} K, N_Fe/N_H={abundance_fit:.2e}", color='red')
+plt.plot(chi_values, fitted_y_values, label=r"Linear fit: T={T_fit:.2f} K, N_Fe/N_H={abundance_fit:.2e}", color='red')
 
 plt.xlabel(r'$\chi $', fontsize=12)
 plt.ylabel(r'$\log(EW_{\lambda}/\lambda^2) - \log(gf)$', fontsize=12)
-plt.title('Curve of growth for weak Fe I lines with linear fit')
-plt.grid(True)
+#plt.title('Curve of growth for weak Fe I lines with linear fit')
+#plt.grid(True)
 plt.legend()
 plt.show()
 
@@ -124,17 +125,18 @@ ew_lambda_non_linear = ew_lambda_filtered[not_linear_mask]
 
 # Plotting the results: Mark points outside the linear region in red
 plt.figure(figsize=(8, 6))
-plt.plot(x_values, y_values, 'o', label='Filtered Fe I lines', color='black')
-plt.plot(x_values[not_linear_mask], y_values[not_linear_mask], 'o', label='Outliers', color='red')
+#plt.plot(x_values, y_values, 'o', label='Filtered Fe I lines', color='black')
+plt.plot(x_values, y_values, 'o', color='black')
+plt.plot(x_values[not_linear_mask], y_values[not_linear_mask], 'o', label=r'Outliers', color='red')
 # Plot the linear fit
-plt.plot(chi_values, fitted_y_values, label=f"Linear fit: T={T_fit:.2f} K, N_Fe/N_H={abundance_fit:.2e}", color='red')
+plt.plot(chi_values, fitted_y_values, label=r"Linear fit: T={T_fit:.2f} K, N_Fe/N_H={abundance_fit:.2e}", color='red')
 
 # Labels and title
 plt.xlabel(r'$\chi $', fontsize=12)
 plt.ylabel(r'$\log(EW_{\lambda}/\lambda^2) - \log(gf)$', fontsize=12)
-plt.title('Curve of growth for weak Fe I lines with outliers marked', fontsize=14)
+#plt.title(r'Curve of growth for weak Fe I lines with outliers marked', fontsize=14)
 
-plt.grid(True)
+#plt.grid(True)
 plt.legend()
 plt.show()
 
@@ -168,14 +170,14 @@ x_lim = -5.125
 
 
 plt.figure(figsize=(8, 6))
-plt.plot(x_values_2, y_values_2, 'o', label='Fitted Fe I lines')
-plt.plot([min_x, max_x], [min_x, max_x], '--', color='gray', label='45° reference')
-plt.axvline(x=x_lim, color='red', linestyle='--', label='Saturation limit')
-plt.axvspan(x_lim, np.max(x_values_2), color='gray', alpha=0.3, label='Saturation region')
+plt.plot(x_values_2, y_values_2, 'o', label=r'Fitted Fe I lines')
+plt.plot([min_x, max_x], [min_x, max_x], '--', color='gray', label=r'45° reference')
+plt.axvline(x=x_lim, color='red', linestyle='--', label=r'Saturation limit')
+plt.axvspan(x_lim, np.max(x_values_2), color='gray', alpha=0.3, label=r'Saturation region')
 plt.xlabel(r'$\log(\lambda gf) + \log(N_{Fe}/N_H)T\chi - 5040 T $', fontsize=12)
 plt.ylabel(r'$\log(EW_{\lambda}/\lambda)$', fontsize=12)
-plt.title('Curve of growth for weak Fe I lines without saturation points')
-plt.grid(True)
+plt.title(r'Curve of growth for weak Fe I lines without saturation points')
+#plt.grid(True)
 plt.legend()
 plt.show()
 
@@ -212,17 +214,18 @@ print(f"Fitted Iron Abundance (N_Fe/N_H): {abundance_fit_3:.2e} ± {abundance_er
 
 # plotting the growth curve
 plt.figure(figsize=(8, 6))
-plt.plot(x_values_3, y_values_3, 'o', label='Fitted Fe I lines')
+plt.plot(x_values_3, y_values_3, 'o', label=r'Fitted Fe I lines')
+#plt.plot(x_values_3, y_values_3, 'o')
 
 # Plot the linear fit
 chi_values_3 = exc_potential_fitted_2
 fitted_y_values_3 = linear_fit(chi_values_3, T_fit_3, abundance_fit_3)
-plt.plot(chi_values_3, fitted_y_values_3, label=f"Linear fit: T={T_fit_3:.2f} K, N_Fe/N_H={abundance_fit_3:.2e}", color='red')
+plt.plot(chi_values_3, fitted_y_values_3, label=r"Linear fit: T={T_fit_3:.2f} K, N_Fe/N_H={abundance_fit_3:.2e}", color='red')
 
 plt.xlabel(r'$\chi $', fontsize=12)
 plt.ylabel(r'$\log(EW_{\lambda}/\lambda^2) - \log(gf)$', fontsize=12)
-plt.title('Curve of growth for weak Fe I lines with linear fit after throwing out seperation values')
-plt.grid(True)
+#plt.title(r'Curve of growth for weak Fe I lines with linear fit after throwing out seperation values')
+#plt.grid(True)
 plt.legend()
 plt.show()
 
